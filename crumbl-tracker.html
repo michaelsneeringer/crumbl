@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🍪 My Awesome Crumble Cookie Journal</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fdf6f0;
+      color: #2d1a0e;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #ff6b9d 0%, #ff3d7f 100%);
+      color: white;
+      padding: 28px 24px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(255, 61, 127, 0.3);
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    header p {
+      margin-top: 4px;
+      opacity: 0.9;
+      font-size: 0.95rem;
+    }
+
+    /* STATS BAR */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      background: white;
+      padding: 14px 24px;
+      border-bottom: 1px solid #f0ddd3;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ff3d7f;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #999;
+      margin-top: 1px;
+    }
+
+    /* CONTROLS */
+    .controls {
+      max-width: 1100px;
+      margin: 20px auto 0;
+      padding: 0 20px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-wrap {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      border: 2px solid #f0ddd3;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      background: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-wrap input:focus { border-color: #ff6b9d; }
+    .search-wrap svg {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ccc;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .filter-tab {
+      padding: 8px 16px;
+      border-radius: 50px;
+      border: 2px solid #f0ddd3;
+      background: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #888;
+    }
+    .filter-tab:hover { border-color: #ff6b9d; color: #ff3d7f; }
+    .filter-tab.active {
+      background: #ff3d7f;
+      border-color: #ff3d7f;
+      color: white;
+    }
+
+    /* GRID */
+    .grid {
+      max-width: 1100px;
+      margin: 20px auto 40px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* CARD */
+    .card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      background: #fdf0f5;
+      display: block;
+    }
+    .card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #fdf0f5 0%, #fce8f0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 3px 8px;
+      border-radius: 50px;
+      margin-bottom: 6px;
+    }
+    .badge-classic {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .badge-top25 {
+      background: #fce8f0;
+      color: #c2185b;
+    }
+    .badge-weekly {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .card-body {
+      padding: 14px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .card-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a0a04;
+      line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    /* STATUS BUTTONS */
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .btn-status {
+      flex: 1;
+      padding: 7px 10px;
+      border-radius: 50px;
+      border: 2px solid #f0ddd3;
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .btn-status:hover { border-color: #ff6b9d; color: #ff3d7f; }
+    .btn-status.active-wishlist {
+      background: #fff0f7;
+      border-color: #ff6b9d;
+      color: #ff3d7f;
+    }
+    .btn-status.active-tried {
+      background: #f0fff4;
+      border-color: #38a169;
+      color: #38a169;
+    }
+
+    /* RATING PANEL */
+    .rating-panel {
+      margin-top: 10px;
+      padding: 12px;
+      background: #fdf6f0;
+      border-radius: 12px;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rating-panel.visible { display: flex; }
+
+    .stars {
+      display: flex;
+      gap: 4px;
+    }
+    .star {
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.1s;
+      color: #ddd;
+      user-select: none;
+    }
+    .star:hover, .star.filled { color: #fbbf24; }
+    .star:hover { transform: scale(1.2); }
+
+    .notes-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid #f0ddd3;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 60px;
+      outline: none;
+      background: white;
+      color: #333;
+      transition: border-color 0.2s;
+    }
+    .notes-input:focus { border-color: #ff6b9d; }
+    .notes-input::placeholder { color: #ccc; }
+
+    .rating-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #bbb;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: #bbb;
+      font-size: 1.1rem;
+    }
+    .no-results span { font-size: 3rem; display: block; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🍪 My Awesome Crumble Cookie Journal</h1>
+  <p>Track every cookie you've tried — rate, review, and discover what's next</p>
+</header>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num" id="stat-tried">0</div>
+    <div class="stat-label">Tried</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="stat-wishlist">0</div>
+    <div class="stat-label">Want to Try</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="stat-avg">—</div>
+    <div class="stat-label">Avg Rating</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="stat-total">0</div>
+    <div class="stat-label">Total Cookies</div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input type="text" id="search" placeholder="Search cookies…" oninput="render()" />
+  </div>
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="setFilter('all', this)">All</button>
+    <button class="filter-tab" onclick="setFilter('wishlist', this)">⭐ Want to Try</button>
+    <button class="filter-tab" onclick="setFilter('tried', this)">✅ Tried</button>
+    <button class="filter-tab" onclick="setFilter('none', this)">🔍 Undiscovered</button>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const COOKIES = [
+  {
+    id: "dubai-chocolate-brownie",
+    name: "Dubai-Style Chocolate Brownie",
+    desc: "A soft fudgy brownie with a crunchy Kataifi and pistachio filling topped with a layer of milk chocolate and drizzled with even more pistachio cream.",
+    img: "https://crumbl.video/4d8f989a-f339-4812-a626-c3f58af19d7b_DubaiBrownie_FlyingAerial_TECH.png",
+    category: "top25",
+    rank: 1
+  },
+  {
+    id: "milk-chocolate-chip-cookie",
+    name: "Milk Chocolate Chip Cookie",
+    desc: "A classic milk chocolate chip cookie, baked thick, soft, and satisfying.",
+    img: "https://crumbl.video/a5479faa-b292-4f8b-b35a-393fa7ebff3c_MilkChocolateChip_OverheadAerial_NoShadow_TECH.png",
+    category: "classic",
+    rank: 2
+  },
+  {
+    id: "smores-skillet-cookie",
+    name: "S'mores Skillet Cookie ft. HERSHEY'S",
+    desc: "A gooey graham cookie baked with melty pieces of HERSHEY'S Chocolate, topped with fluffy marshmallow mousse, a drizzle of melted chocolate, and a crunch of graham cracker streusel.",
+    img: "https://crumbl.video/c41dfb2a-8797-4b64-9d10-eff20b0698a0_SmoresSkilletCookie_OverheadAerial_NoShadow_TECH.png",
+    category: "classic",
+    rank: 3
+  },
+  {
+    id: "cookies-cream-milkshake",
+    name: "Cookies & Cream Milkshake Cookie ft. MINI OREO®",
+    desc: "A chilly cookies & cream milkshake-inspired cookie bursting with OREO® cookie pieces from the base to the creamy vanilla buttercream, and finished with a MINI OREO® cookie.",
+    img: "https://crumbl.video/3964c617-ce20-4546-add2-a6f42e8d6d4c_CookiesCreamMilkshakeFtMiniOreo_OverheadAerial_NoShadowTech.png",
+    category: "top25",
+    rank: 4
+  },
+  {
+    id: "semi-sweet-chocolate-chunk",
+    name: "Semi-Sweet Chocolate Chunk Cookie",
+    desc: "A classic cookie filled with irresistible semi-sweet chocolate chunks and a sprinkle of flaky sea salt.",
+    img: null,
+    category: "top25",
+    rank: 5
+  },
+  {
+    id: "strawberry-ice-cream-bar",
+    name: "Strawberry Ice Cream Bar Cookie",
+    desc: "A chilled cookie packed with strawberry and vanilla, layered with whipped white drop buttercream, and topped with a strawberry and vanilla streusel crunch.",
+    img: "https://crumbl.video/1d467b99-bb37-4996-bca9-a743c7b07aec_StrawberryIceCreamBar_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 6
+  },
+  {
+    id: "pink-sugar-cookie",
+    name: "Pink Sugar Cookie",
+    desc: "A classic almond sugar cookie topped with a silky pink swoop of real almond frosting.",
+    img: "https://crumbl.video/568d7e50-71f9-4223-826a-72672312ddbb_ClassicPinkSugar_FlyingAerial_TECH.png",
+    category: "classic",
+    rank: 7
+  },
+  {
+    id: "brownie-batter-cookie",
+    name: "Brownie Batter Cookie",
+    desc: "A gooey chocolate cookie packed with semi-sweet chocolate chips and topped with delectable brownie batter.",
+    img: "https://crumbl.video/4ead7000-644b-4bd4-938a-622ec3194846_BrownieBatter_FlyingAerial_TECH.png",
+    category: "classic",
+    rank: 8
+  },
+  {
+    id: "banana-pudding",
+    name: "Banana Pudding",
+    desc: "Creamy banana-packed layers of velvety vanilla pudding and vanilla wafers topped off with fresh whipped cream and wafer crumbs.",
+    img: "https://crumbl.video/defb8841-61bd-4558-8ffa-aa9093d7db31_BananaPudding_CutAerial_TECH.png",
+    category: "top25",
+    rank: 9
+  },
+  {
+    id: "kentucky-butter-cake",
+    name: "Kentucky Butter Cake Cookie",
+    desc: "A warm yellow butter cake cookie smothered with a melt-in-your-mouth buttery glaze and topped with a sprinkle of powdered sugar.",
+    img: "https://crumbl.video/0d63aa66-55e2-4833-8ef3-ef3941f3f2a9_KentuckyButterCake_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 10
+  },
+  {
+    id: "biscoff-tres-leches",
+    name: "Biscoff® Tres Leches Cake",
+    desc: "A lightly spiced cake soaked in a classic tres leches sauce, topped with Lotus Biscoff® cookie butter, fresh whipped cream, Lotus Biscoff® cookie pieces, and a drizzle of melted cookie butter.",
+    img: null,
+    category: "top25",
+    rank: 11
+  },
+  {
+    id: "peanut-butter-cup-reeses",
+    name: "Peanut Butter Cup Cookie ft. REESE'S",
+    desc: "A classic peanut butter cookie topped with a pool of melted peanut butter chips, drizzled with gooey milk chocolate, and sprinkled with REESE'S Peanut Butter Cups.",
+    img: null,
+    category: "top25",
+    rank: 12
+  },
+  {
+    id: "churro-cookie",
+    name: "Churro Cookie",
+    desc: "A warm cinnamon cookie topped with a swirl of smooth cinnamon buttercream and a dusting of cinnamon sugar.",
+    img: "https://crumbl.video/52a14b1a-89de-490d-8f18-137d69d7fc61_ChurroCookie_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 13
+  },
+  {
+    id: "chocolate-hazelnut-cheesecake",
+    name: "Chocolate Hazelnut Cheesecake ft. NUTELLA®",
+    desc: "A decadent chocolate and hazelnut cheesecake nestled on a cookies & cream crust, then crowned with smooth NUTELLA® and fluffy whipped cream.",
+    img: "https://crumbl.video/71d04456-3118-4a05-859b-f465c0726c1a_HazelnutCheesecakeDessert_FlyingAerial_TECH.png",
+    category: "top25",
+    rank: 14
+  },
+  {
+    id: "pink-velvet-cake-cookie",
+    name: "Pink Velvet Cake Cookie",
+    desc: "A velvety cake batter cookie topped with smooth vanilla cream cheese frosting and a delicate sprinkle of pink velvet cookie crumbs.",
+    img: "https://crumbl.video/94efc6a8-346c-4aa5-a69f-ead7c369bd72__PinkVelvetCake_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 15
+  },
+  {
+    id: "cookie-dough-cookie",
+    name: "Cookie Dough Cookie",
+    desc: "A brown sugar cookie topped with creamy cookie dough buttercream and finished with chunks of cookie dough.",
+    img: "https://crumbl.video/307d8893-0148-4853-b502-635e5e8b30fc_CookieDough_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 16
+  },
+  {
+    id: "molten-lava-cookie",
+    name: "Molten Lava Cookie",
+    desc: "A scrumptious dark chocolate cookie oozing with hot fudge and sprinkled with powdered sugar.",
+    img: "https://crumbl.video/8717000c-4cb9-4695-adf1-55ecf85ce7f7_MoltenLavaCookie_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 17
+  },
+  {
+    id: "french-toast-cookie",
+    name: "French Toast Cookie",
+    desc: "A fluffy, buttery cookie topped with cinnamon egg wash, a dollop of buttercream, a sweet syrup drizzle, and a sprinkle of powdered sugar.",
+    img: "https://crumbl.video/33a8d652-2b23-4e10-84f3-3b50a231e9e5_FrenchToastCookie_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 18
+  },
+  {
+    id: "red-velvet-cupcake-cookie",
+    name: "Red Velvet Cupcake Cookie",
+    desc: "A red velvet cookie topped with a swirl of delicious vanilla cream cheese frosting and a sprinkle of crumbly red velvet cookie crumbs.",
+    img: "https://crumbl.video/e0403610-1b07-4df9-87a5-975547a505a2_RedVelvetCupcake_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 19
+  },
+  {
+    id: "salted-caramel-cheesecake",
+    name: "Salted Caramel Cheesecake",
+    desc: "A caramel cheesecake baked over a buttery graham cracker crust, then topped with a drizzle of caramel, a sprinkle of sea salt, and a dollop of whipped cream.",
+    img: "https://crumbl.video/71b559c7-f68c-4a12-9239-093a62a63cfc_SaltedCaramelCheesecakeDessert_FlyingAerial_TECH.png",
+    category: "top25",
+    rank: 20
+  },
+  {
+    id: "waffle-cookie",
+    name: "Waffle Cookie",
+    desc: "A waffle cookie topped with a dollop of buttercream frosting and served with a side of syrup.",
+    img: "https://crumbl.video/655d6603-7abc-45f7-909a-849e05c2c6c9_Waffle_OverheadAerial_NoShadow_Tech.png",
+    category: "top25",
+    rank: 21
+  },
+  {
+    id: "snickerdoodle-cookie",
+    name: "Snickerdoodle Cookie",
+    desc: "A classic vanilla sugar cookie rolled in a sparkly cinnamon sugar coating.",
+    img: "https://crumbl.video/59e8277d-8802-4371-a35a-25e31e3fc747_Snickerdoodle_OverheadAerial_NoShadow_TECH.png",
+    category: "top25",
+    rank: 22
+  },
+  {
+    id: "key-lime-pie-cookie",
+    name: "Key Lime Pie Cookie",
+    desc: "A refreshing chilled graham cookie layered with zesty lime filling, then topped with whipped cream, graham cracker crumbs, and a fresh lime wedge.",
+    img: "https://crumbl.video/1e6ad007-a75d-4ad4-837e-3fbd4dd7be21_KeyLimePie_OverheadAerial_NoShadow.png",
+    category: "top25",
+    rank: 23
+  },
+  {
+    id: "brookie-cookie",
+    name: "Brookie Cookie",
+    desc: "A semi-sweet chocolate chip cookie and a rich chocolate cookie perfectly baked together.",
+    img: "https://crumbl.video/9cfa4aa7-4512-44a7-ba07-63807cc1c45b_Brookie_OverheadAerial_TECH.png",
+    category: "top25",
+    rank: 24
+  },
+  {
+    id: "celebration-cake-cookie",
+    name: "Celebration Cake Cookie",
+    desc: "A fluffy cake batter cookie with cake batter cream cheese frosting and a splash of rainbow sprinkles.",
+    img: null,
+    category: "top25",
+    rank: 25
+  },
+  // ── Classics (always available) ──
+  {
+    id: "chocolate-chip-cookie",
+    name: "Chocolate Chip Cookie",
+    desc: "A classic warm brown sugar cookie loaded with melty milk chocolate chips and rich semi-sweet chocolate chunks.",
+    img: "https://crumbl.video/b79a9d21-35de-44d4-9916-7ec91d54cdb6_ChocolateChipCookie_OverheadAerial_NoShadow_TECH.png",
+    category: "classic"
+  },
+  // ── This Week's Rotating Menu (Jun 21–27) ──
+  {
+    id: "caramel-apple-cookie",
+    name: "Caramel Apple Cookie",
+    desc: "A warm cinnamon apple cookie topped with caramel cream cheese frosting, chopped Granny Smith apples, a drizzle of caramel, and a house-made streusel.",
+    img: "https://crumbl.video/7b5f2317-63b8-4f4a-bc93-7c7657b1b247_CaramelApple_OverheadAerial_NoSHadow_TECH.png",
+    category: "weekly"
+  },
+  {
+    id: "cotton-candy-cookie",
+    name: "Cotton Candy Cookie",
+    desc: "A fluffy vanilla cookie covered in cotton candy cream cheese frosting, with a sprinkle of popping candy.",
+    img: "https://crumbl.video/36c7c6c5-2f22-4fe7-84a5-eac7175f753b_CottonCandyCookie_FlyingAerial_TECH.png",
+    category: "weekly"
+  },
+  {
+    id: "strawberry-lemonade-cookie",
+    name: "Strawberry Lemonade Cookie",
+    desc: "A lemon sugar cookie topped with a swirl of lemon and strawberry buttercream and finished with slices of fresh lemon and fresh strawberry.",
+    img: "https://crumbl.video/f6e7abf9-fc2a-4465-9fb1-5af76b878e9b_StrawberryLemonadeCookie_OverheadAerial_NoShadow_TECH.png",
+    category: "weekly"
+  },
+  {
+    id: "fried-cookies-cream-cookie",
+    name: "Fried Cookies & Cream Cookie",
+    desc: "A buttery cookie stuffed with a whole cookies & cream cookie, rolled in a golden streusel, topped with a sweet butter glaze and extra streusel, then finished with a drizzle of cookies & cream glaze.",
+    img: "https://crumbl.video/7c0d0834-3a4b-48f5-b08e-167081c5ed20_FriedCookiesCreamCookie_OverheadAerial_TECH.png",
+    category: "weekly"
+  },
+  {
+    id: "funnel-cake-cookie",
+    name: "Funnel Cake Cookie",
+    desc: "A buttery cookie baked with sweetened condensed milk and cookie crumbs, topped with a buttery glaze, then finished with a generous dusting of powdered sugar.",
+    img: "https://crumbl.video/71e7a38b-5ef7-4d3f-b2c8-ff36f2364a4b_FunnelCakeCookie_OverheadAerial_NoShadow_TECH.png",
+    category: "weekly"
+  },
+  {
+    id: "cake-batter-cookie-thins",
+    name: "Cake Batter Cookie Thins (Set of 2)",
+    desc: "Two thin cake batter cookies complete with rainbow sprinkles, crisp edges, and chewy centers.",
+    img: "https://crumbl.video/4a0da65d-edae-4e3b-8fee-eda8e17a782b_CakeBatterCookieThins_FlyingAerial_TECH_1.png",
+    category: "weekly"
+  },
+  {
+    id: "dubai-chocolate-strawberry-cup",
+    name: "Dubai-Style Chocolate Strawberry Cup",
+    desc: "Layers of smooth milk chocolate, pistachio cream, crunchy toasted Kataifi pieces, and fresh strawberries.",
+    img: "https://crumbl.video/1e8b3704-9076-4025-b356-5299f807e2a9_Dubai-StyleStrawberryCup_Aerial_TECH.png",
+    category: "weekly"
+  },
+  {
+    id: "chocolate-strawberry-cup-gf",
+    name: "Chocolate Strawberry Cup (Gluten-Friendly)",
+    desc: "A gluten-friendly treat layered with chocolate and fresh strawberries — all the indulgence, none of the gluten.",
+    img: "https://crumbl.video/4470bf6b-3b2a-4ccf-9f24-9b95c2e2f3bc_ChocolateStrawberryCup_GlutenFriendly_Aerial_TECH.png",
+    category: "weekly"
+  }
+];
+
+// Load state from localStorage
+let state = {};
+try {
+  state = JSON.parse(localStorage.getItem('crumbl-journal') || '{}');
+} catch(e) {}
+
+function save() {
+  localStorage.setItem('crumbl-journal', JSON.stringify(state));
+}
+
+function getEntry(id) {
+  return state[id] || { status: 'none', rating: 0, notes: '' };
+}
+
+let activeFilter = 'all';
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function toggleStatus(id, newStatus) {
+  const entry = getEntry(id);
+  // If clicking the same active status, remove it
+  entry.status = entry.status === newStatus ? 'none' : newStatus;
+  state[id] = entry;
+  save();
+  render();
+}
+
+function setRating(id, rating) {
+  const entry = getEntry(id);
+  entry.rating = entry.rating === rating ? 0 : rating;
+  state[id] = entry;
+  save();
+  renderStars(id, entry.rating);
+  updateStats();
+}
+
+function saveNotes(id, val) {
+  const entry = getEntry(id);
+  entry.notes = val;
+  state[id] = entry;
+  save();
+}
+
+function renderStars(id, rating) {
+  const container = document.getElementById('stars-' + id);
+  if (!container) return;
+  container.querySelectorAll('.star').forEach((s, i) => {
+    s.classList.toggle('filled', i < rating);
+  });
+}
+
+function updateStats() {
+  const entries = Object.values(state);
+  const tried = entries.filter(e => e.status === 'tried').length;
+  const wishlist = entries.filter(e => e.status === 'wishlist').length;
+  const ratings = entries.filter(e => e.status === 'tried' && e.rating > 0).map(e => e.rating);
+  const avg = ratings.length ? (ratings.reduce((a,b) => a+b, 0) / ratings.length).toFixed(1) : '—';
+
+  document.getElementById('stat-tried').textContent = tried;
+  document.getElementById('stat-wishlist').textContent = wishlist;
+  document.getElementById('stat-avg').textContent = avg === '—' ? '—' : avg + ' ★';
+  document.getElementById('stat-total').textContent = COOKIES.length;
+}
+
+function render() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const grid = document.getElementById('grid');
+
+  let filtered = COOKIES.filter(c => {
+    const entry = getEntry(c.id);
+    const matchesSearch = c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q);
+    const matchesFilter =
+      activeFilter === 'all' ||
+      (activeFilter === 'tried' && entry.status === 'tried') ||
+      (activeFilter === 'wishlist' && entry.status === 'wishlist') ||
+      (activeFilter === 'none' && entry.status === 'none');
+    return matchesSearch && matchesFilter;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="no-results"><span>🍪</span>No cookies found!</div>';
+    updateStats();
+    return;
+  }
+
+  grid.innerHTML = filtered.map(cookie => {
+    const entry = getEntry(cookie.id);
+    const isTried = entry.status === 'tried';
+    const isWishlist = entry.status === 'wishlist';
+
+    const imgHtml = cookie.img
+      ? `<img class="card-img" src="${cookie.img}" alt="${cookie.name}" loading="lazy" />`
+      : `<div class="card-img-placeholder">🍪</div>`;
+
+    const badgeHtml = cookie.category === 'classic'
+      ? `<span class="card-badge badge-classic">⭐ Classic</span>`
+      : cookie.category === 'weekly'
+      ? `<span class="card-badge badge-weekly">🗓 This Week</span>`
+      : `<span class="card-badge badge-top25">#${cookie.rank} Top 25</span>`;
+
+    const starsHtml = [1,2,3,4,5].map(i =>
+      `<span class="star ${i <= entry.rating ? 'filled' : ''}" onclick="setRating('${cookie.id}', ${i})">★</span>`
+    ).join('');
+
+    return `
+      <div class="card" id="card-${cookie.id}">
+        ${imgHtml}
+        <div class="card-body">
+          ${badgeHtml}
+          <div class="card-name">${cookie.name}</div>
+          <div class="card-desc">${cookie.desc}</div>
+
+          <div class="card-actions">
+            <button class="btn-status ${isWishlist ? 'active-wishlist' : ''}"
+              onclick="toggleStatus('${cookie.id}', 'wishlist')">
+              <span>${isWishlist ? '❤️' : '🤍'}</span>
+              <span>Want to Try</span>
+            </button>
+            <button class="btn-status ${isTried ? 'active-tried' : ''}"
+              onclick="toggleStatus('${cookie.id}', 'tried')">
+              <span>${isTried ? '✅' : '○'}</span>
+              <span>Tried It</span>
+            </button>
+          </div>
+
+          <div class="rating-panel ${isTried ? 'visible' : ''}" id="panel-${cookie.id}">
+            <div class="rating-label">Your Rating</div>
+            <div class="stars" id="stars-${cookie.id}">${starsHtml}</div>
+            <textarea class="notes-input"
+              placeholder="Add your notes… Was it warm? Chilled? Worth the hype?"
+              oninput="saveNotes('${cookie.id}', this.value)"
+            >${entry.notes}</textarea>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  updateStats();
+}
+
+render();
+</script>
+</body>
+</html>
