@@ -259,7 +259,8 @@ const COOKIES = [
     nutrition: { calories: 550, fat: 30, carbs: 72, sugar: null, protein: 4, confidence: "medium" },
     ingredients: ["Flour", "Brown sugar", "Butter", "Eggs", "Milk chocolate chips", "Semi-sweet chocolate chunks", "Baking soda", "Vanilla extract", "Salt"]
   },
-  // ── This Week's Rotating Menu (Jun 21–27) ──
+  // ── Rotating Weekly Menu (recent weeks) ──
+  // ── Week of Jun 21–27 ──
   {
     id: "caramel-apple-cookie",
     name: "Caramel Apple Cookie",
@@ -331,5 +332,188 @@ const COOKIES = [
     category: "weekly",
     nutrition: null,
     ingredients: ["Chocolate (gluten-friendly)", "Fresh strawberries", "Gluten-friendly base (rice flour or almond flour blend)"]
+  },
+  // ── Week of Jul 6–11 ("Fan Favorites Week") ──
+  {
+    id: "marbled-stuffed-cheesecake-cookie",
+    name: "Marbled Stuffed Cheesecake Cookie",
+    desc: "A warm, marbled cookie made with brownie and vanilla cream cheese dough, stuffed with a rich cheesecake filling.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "Cocoa powder", "Cream cheese filling", "Eggs", "Vanilla extract"]
+  },
+  {
+    id: "biscoff-skillet-cookie",
+    name: "Biscoff® Skillet Cookie",
+    desc: "A warm, spiced Biscoff® skillet cookie topped with mousse, Biscoff® cookie pieces, and a drizzle of melty Biscoff® cookie butter.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Brown sugar", "Cinnamon & spices", "Biscoff® cookie butter", "Biscoff® cookie pieces", "Mousse topping (cream, sugar)"]
+  },
+  {
+    id: "birthday-cake-cookie-oreo",
+    name: "Birthday Cake Cookie ft. OREO®",
+    desc: "A warm cookie made with OREO® cookie pieces, covered in cake batter cream cheese frosting and topped with more OREO® pieces and rainbow sprinkles.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "OREO® cookie pieces", "Cake batter cream cheese frosting", "Rainbow sprinkles"]
+  },
+  {
+    id: "caramel-shortbread-twix",
+    name: "Caramel Shortbread Cookie ft. TWIX®",
+    desc: "A chilled, shortbread-inspired cookie filled with TWIX® pieces, topped with caramel, milk chocolate, and chopped TWIX®.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "TWIX® pieces", "Caramel", "Milk chocolate"]
+  },
+  // ── Week of Jul 13–18 ("Beach Week") ──
+  {
+    id: "sandy-beach-banana-pudding-cup",
+    name: "Sandy Beach Banana Pudding Cup",
+    desc: "Banana pudding layered with vanilla pudding and vanilla wafers, topped with whipped cream and crushed vanilla wafers, served with a mini beach shovel.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Fresh banana", "Vanilla pudding (milk, sugar, cornstarch, vanilla)", "Vanilla wafers", "Whipped cream", "Crushed wafer crumbs"]
+  },
+  {
+    id: "beach-bum-cookie",
+    name: "Beach Bum Cookie",
+    desc: "A graham cookie topped with blue honey cream cheese frosting, graham cracker crumbs, a peach ring \"float,\" and a teddy graham cracker lounging under a decorative parasol.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Graham cracker crumbs", "Flour", "Butter", "Sugar", "Blue honey cream cheese frosting (cream cheese, butter, honey)", "Peach ring candy", "Teddy graham cracker"]
+  },
+  {
+    id: "key-lime-cheesecake",
+    name: "Key Lime Cheesecake",
+    desc: "Key lime cheesecake filling on a graham cracker crust, finished with a ring of whipped cream rosettes, graham crumbs, and fresh lime.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Cream cheese", "Sugar", "Eggs", "Key lime juice & zest", "Graham cracker crust (graham crumbs, butter)", "Whipped cream", "Fresh lime"]
+  },
+  {
+    id: "molten-lava-cake",
+    name: "Molten Lava Cake",
+    desc: "A rich chocolate cake with a warm, molten center and a dollop of smooth vanilla mousse.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Dark chocolate", "Butter", "Sugar", "Eggs", "Vanilla mousse (cream, sugar, vanilla)"]
+  },
+  {
+    id: "hawaiian-coconut-cookie",
+    name: "Hawaiian Coconut Cookie",
+    desc: "A soft cake batter cookie crowned with a colorful zig-zag of green, pink, purple, and yellow coconut cream cheese frosting.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "Eggs", "Vanilla extract", "Coconut cream cheese frosting (cream cheese, butter, powdered sugar, coconut)", "Food coloring"]
+  },
+  {
+    id: "pineapple-whip-cookie",
+    name: "Pineapple Whip Cookie",
+    desc: "A pineapple sugar cookie crowned with a whipped pineapple-flavored topping, inspired by the classic frozen pineapple dessert.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "Pineapple flavoring", "Whipped pineapple topping (cream, powdered sugar, pineapple)"]
+  },
+  {
+    id: "chocolate-chip-cookie-thins",
+    name: "Chocolate Chip Cookie Thins",
+    desc: "A crispy, thin take on the classic chocolate chip cookie.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Brown sugar", "Milk chocolate chips", "Semi-sweet chocolate chunks", "Vanilla extract"]
+  },
+  // ── Week of Jul 20–25 ("All-Cookie-Thins Week") ──
+  {
+    id: "biscoff-cookie-thins",
+    name: "Biscoff® Cookie Thins",
+    desc: "Two thin cookie butter cookies rolled and baked with crunchy Biscoff® cookie pieces.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "Biscoff® cookie butter", "Biscoff® cookie pieces"]
+  },
+  {
+    id: "dubai-chocolate-sandwich-cookie",
+    name: "Dubai-Style Chocolate Sandwich Cookie",
+    desc: "Two thin cocoa-based wafer cookies sandwiching a filling of pistachio cream and crispy kataifi, inspired by the viral Dubai chocolate trend.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Cocoa powder", "Butter", "Sugar", "Pistachio cream", "Kataifi (shredded phyllo pastry)"]
+  },
+  {
+    id: "brownie-batter-cookie-thins",
+    name: "Brownie Batter Cookie Thins",
+    desc: "Two thin chocolate cookies packed with semi-sweet chocolate chips, topped with brownie batter.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Brown sugar", "Cocoa powder", "Semi-sweet chocolate chips", "Brownie batter topping"]
+  },
+  {
+    id: "smores-cookie-thins",
+    name: "S'mores Cookie Thins",
+    desc: "Two thin, buttery graham cookies baked with melty marshmallow, topped with a drizzle of milk chocolate.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Graham cracker crumbs", "Flour", "Butter", "Sugar", "Marshmallow", "Milk chocolate drizzle"]
+  },
+  {
+    id: "strawberry-crinkle-cookie-thins",
+    name: "Strawberry Crinkle Cookie Thins",
+    desc: "A thin strawberry cookie with a sweet powdered sugar crinkle finish.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "Freeze-dried strawberry", "Powdered sugar coating"]
+  },
+  {
+    id: "mallow-sandwich-cookie-thins",
+    name: "Mallow Sandwich Cookie Thins",
+    desc: "Marshmallow cookies & cream mousse with gooey brownie pieces sandwiched between two thin cookies.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "Marshmallow cookies & cream mousse", "Brownie pieces"]
+  },
+  {
+    id: "mms-cookie-thins",
+    name: "M&M'S® Cookie Thins",
+    desc: "Two delicately crisp thin cookies with caramelized edges, chewy centers, and M&M'S® Minis candies.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Brown sugar", "Eggs", "M&M'S® Minis candies"]
+  },
+  {
+    id: "pink-sugar-cookie-thins",
+    name: "Pink Sugar Cookie Thins",
+    desc: "A thin take on the classic almond pink sugar cookie, topped with a swoop of pink almond frosting.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Butter", "Sugar", "Almond extract", "Pink almond frosting (butter, powdered sugar, almond extract)", "Pink food coloring"]
+  },
+  {
+    id: "red-velvet-cookie-thins",
+    name: "Red Velvet Cookie Thins",
+    desc: "Thin red velvet cookies loaded with white chips and finished with a smooth white drizzle.",
+    img: null,
+    category: "weekly",
+    nutrition: null,
+    ingredients: ["Flour", "Cocoa powder", "Red food coloring", "Buttermilk", "Butter", "Sugar", "White chocolate chips", "White chocolate drizzle"]
   }
 ];
