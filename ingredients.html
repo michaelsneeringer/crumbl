@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🧾 Ingredients — My Crumbl Journal</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fdf6f0;
+      color: #2d1a0e;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ff6b9d 0%, #ff3d7f 100%);
+      color: white;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(255, 61, 127, 0.3);
+    }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .wrap {
+      max-width: 640px;
+      margin: 24px auto 40px;
+      padding: 0 20px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #ff3d7f;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    .detail-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    .detail-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #fdf0f5;
+      display: block;
+    }
+    .detail-img-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #fdf0f5 0%, #fce8f0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+
+    .detail-body {
+      padding: 20px 24px 28px;
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 3px 8px;
+      border-radius: 50px;
+      margin-bottom: 10px;
+    }
+    .badge-classic { background: #fff3cd; color: #856404; }
+    .badge-top25 { background: #fce8f0; color: #c2185b; }
+    .badge-weekly { background: #e8f5e9; color: #2e7d32; }
+
+    .detail-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #1a0a04;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .detail-desc {
+      font-size: 0.92rem;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #ff3d7f;
+      margin-bottom: 10px;
+    }
+
+    .ingredients-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .ingredients-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: #2d1a0e;
+      padding: 10px 12px;
+      background: #fdf6f0;
+      border-radius: 10px;
+    }
+    .ingredients-list li::before {
+      content: "🍪";
+      font-size: 0.85rem;
+    }
+
+    .ingredients-empty {
+      font-size: 0.85rem;
+      color: #bbb;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .disclaimer {
+      font-size: 0.72rem;
+      color: #bbb;
+      line-height: 1.5;
+    }
+
+    .not-found {
+      text-align: center;
+      padding: 60px 20px;
+      color: #bbb;
+    }
+    .not-found span { font-size: 3rem; display: block; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🧾 Ingredient List</h1>
+</header>
+
+<div class="wrap">
+  <a class="back-link" href="index.html">&larr; Back to My Crumbl Journal</a>
+  <div id="content"></div>
+</div>
+
+<script src="cookies-data.js"></script>
+<script>
+  function renderNotFound() {
+    document.getElementById('content').innerHTML = `
+      <div class="not-found">
+        <span>🍪</span>
+        Cookie not found.
+      </div>
+    `;
+  }
+
+  function render() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const cookie = COOKIES.find(c => c.id === id);
+
+    if (!cookie) {
+      renderNotFound();
+      return;
+    }
+
+    document.title = `🧾 ${cookie.name} — Ingredients`;
+
+    const imgHtml = cookie.img
+      ? `<img class="detail-img" src="${cookie.img}" alt="${cookie.name}" />`
+      : `<div class="detail-img-placeholder">🍪</div>`;
+
+    const badgeHtml = cookie.category === 'classic'
+      ? `<span class="card-badge badge-classic">⭐ Classic</span>`
+      : cookie.category === 'weekly'
+      ? `<span class="card-badge badge-weekly">🗓 This Week</span>`
+      : `<span class="card-badge badge-top25">#${cookie.rank} Top 25</span>`;
+
+    const ingredientsHtml = (cookie.ingredients && cookie.ingredients.length)
+      ? `<ul class="ingredients-list">${cookie.ingredients.map(i => `<li>${i}</li>`).join('')}</ul>`
+      : `<div class="ingredients-empty">Ingredient info not available.</div>`;
+
+    document.getElementById('content').innerHTML = `
+      <div class="detail-card">
+        ${imgHtml}
+        <div class="detail-body">
+          ${badgeHtml}
+          <div class="detail-name">${cookie.name}</div>
+          <div class="detail-desc">${cookie.desc}</div>
+          <div class="section-label">Ingredients</div>
+          ${ingredientsHtml}
+          <div class="disclaimer">Ingredient lists are approximate, based on general recipe descriptions — not Crumbl's official ingredient or allergen list. Recipes rotate and can vary by location. Check the Crumbl app or ask in-store for exact ingredients and allergen information.</div>
+        </div>
+      </div>
+    `;
+  }
+
+  render();
+</script>
+</body>
+</html>
