@@ -32,6 +32,25 @@
       opacity: 0.9;
       font-size: 0.95rem;
     }
+    header .site-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 10px;
+      color: white;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      opacity: 0.85;
+      border: 1.5px solid rgba(255,255,255,0.6);
+      border-radius: 50px;
+      padding: 4px 12px;
+      transition: opacity 0.2s, background 0.2s;
+    }
+    header .site-link:hover {
+      opacity: 1;
+      background: rgba(255,255,255,0.15);
+    }
 
     /* STATS BAR */
     .stats {
@@ -349,6 +368,7 @@
 <header>
   <h1>🍪 My Crumbl Journal</h1>
   <p>Track every cookie you've tried — rate, review, and discover what's next</p>
+  <a class="site-link" href="https://crumblcookies.com" target="_blank" rel="noopener">Visit Crumbl.com ↗</a>
 </header>
 
 <div class="stats">
