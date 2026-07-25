@@ -32,6 +32,21 @@
       opacity: 0.9;
       font-size: 0.95rem;
     }
+    .site-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      padding: 5px 14px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.18);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .site-link:hover { background: rgba(255, 255, 255, 0.3); }
 
     /* STATS BAR */
     .stats {
@@ -141,6 +156,9 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
+    .card-img-wrap {
+      position: relative;
+    }
     .card-img {
       width: 100%;
       aspect-ratio: 1;
@@ -156,6 +174,19 @@
       align-items: center;
       justify-content: center;
       font-size: 4rem;
+    }
+    .illustration-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 50px;
     }
 
     .card-badge {
@@ -349,6 +380,7 @@
 <header>
   <h1>🍪 My Crumbl Journal</h1>
   <p>Track every cookie you've tried — rate, review, and discover what's next</p>
+  <a class="site-link" href="https://crumblcookies.com" target="_blank" rel="noopener">🔗 crumblcookies.com</a>
 </header>
 
 <div class="stats">
@@ -385,7 +417,7 @@
   </div>
 </div>
 
-<p class="nutrition-disclaimer">Nutrition values are approximate estimates from third-party trackers, not Crumbl's official figures — items marked * are lower-confidence, and Crumbl's menu/recipes rotate weekly and can vary by location. Check the Crumbl app for exact numbers.</p>
+<p class="nutrition-disclaimer">Nutrition values are approximate estimates from third-party trackers, not Crumbl's official figures — items marked * are lower-confidence, and Crumbl's menu/recipes rotate weekly and can vary by location. Check the Crumbl app for exact numbers. Cookies tagged "Illustration" use a generated stand-in graphic, not an actual Crumbl product photo.</p>
 
 <div class="grid" id="grid"></div>
 
@@ -500,8 +532,11 @@ function render() {
     const isTried = entry.status === 'tried';
     const isWishlist = entry.status === 'wishlist';
 
+    const illustrationBadge = cookie.imgPlaceholder
+      ? `<span class="illustration-badge" title="Generated illustration, not an actual product photo">Illustration</span>`
+      : '';
     const imgHtml = cookie.img
-      ? `<img class="card-img" src="${cookie.img}" alt="${cookie.name}" loading="lazy" />`
+      ? `<div class="card-img-wrap"><img class="card-img" src="${cookie.img}" alt="${cookie.imgPlaceholder ? 'Illustration representing ' + cookie.name : cookie.name}" loading="lazy" />${illustrationBadge}</div>`
       : `<div class="card-img-placeholder">🍪</div>`;
 
     const badgeHtml = cookie.category === 'classic'
