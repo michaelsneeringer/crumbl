@@ -201,6 +201,34 @@
       flex: 1;
     }
 
+    /* NUTRITION */
+    .card-nutrition {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+      font-size: 0.72rem;
+      color: #b08a6a;
+      background: #fdf6f0;
+      border-radius: 8px;
+      padding: 6px 10px;
+    }
+    .card-nutrition .approx::after {
+      content: "*";
+    }
+    .card-nutrition-none {
+      font-size: 0.72rem;
+      color: #ccc;
+      font-style: italic;
+    }
+    .nutrition-disclaimer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      font-size: 0.72rem;
+      color: #bbb;
+      text-align: center;
+    }
+
     /* STATUS BUTTONS */
     .card-actions {
       display: flex;
@@ -337,6 +365,8 @@
   </div>
 </div>
 
+<p class="nutrition-disclaimer">Nutrition values are approximate estimates from third-party trackers, not Crumbl's official figures — items marked * are lower-confidence, and Crumbl's menu/recipes rotate weekly and can vary by location. Check the Crumbl app for exact numbers.</p>
+
 <div class="grid" id="grid"></div>
 
 <script>
@@ -347,7 +377,8 @@ const COOKIES = [
     desc: "A soft fudgy brownie with a crunchy Kataifi and pistachio filling topped with a layer of milk chocolate and drizzled with even more pistachio cream.",
     img: "https://crumbl.video/4d8f989a-f339-4812-a626-c3f58af19d7b_DubaiBrownie_FlyingAerial_TECH.png",
     category: "top25",
-    rank: 1
+    rank: 1,
+    nutrition: { calories: 1010, fat: 56, carbs: 118, sugar: null, protein: 17, confidence: "medium" }
   },
   {
     id: "milk-chocolate-chip-cookie",
@@ -355,7 +386,8 @@ const COOKIES = [
     desc: "A classic milk chocolate chip cookie, baked thick, soft, and satisfying.",
     img: "https://crumbl.video/a5479faa-b292-4f8b-b35a-393fa7ebff3c_MilkChocolateChip_OverheadAerial_NoShadow_TECH.png",
     category: "classic",
-    rank: 2
+    rank: 2,
+    nutrition: { calories: 680, fat: 31, carbs: 94, sugar: null, protein: 5, confidence: "medium" }
   },
   {
     id: "smores-skillet-cookie",
@@ -363,7 +395,8 @@ const COOKIES = [
     desc: "A gooey graham cookie baked with melty pieces of HERSHEY'S Chocolate, topped with fluffy marshmallow mousse, a drizzle of melted chocolate, and a crunch of graham cracker streusel.",
     img: "https://crumbl.video/c41dfb2a-8797-4b64-9d10-eff20b0698a0_SmoresSkilletCookie_OverheadAerial_NoShadow_TECH.png",
     category: "classic",
-    rank: 3
+    rank: 3,
+    nutrition: { calories: 600, fat: 28, carbs: 84, sugar: null, protein: 4, confidence: "low" }
   },
   {
     id: "cookies-cream-milkshake",
@@ -371,7 +404,8 @@ const COOKIES = [
     desc: "A chilly cookies & cream milkshake-inspired cookie bursting with OREO® cookie pieces from the base to the creamy vanilla buttercream, and finished with a MINI OREO® cookie.",
     img: "https://crumbl.video/3964c617-ce20-4546-add2-a6f42e8d6d4c_CookiesCreamMilkshakeFtMiniOreo_OverheadAerial_NoShadowTech.png",
     category: "top25",
-    rank: 4
+    rank: 4,
+    nutrition: null
   },
   {
     id: "semi-sweet-chocolate-chunk",
@@ -379,7 +413,8 @@ const COOKIES = [
     desc: "A classic cookie filled with irresistible semi-sweet chocolate chunks and a sprinkle of flaky sea salt.",
     img: null,
     category: "top25",
-    rank: 5
+    rank: 5,
+    nutrition: { calories: 600, fat: 30, carbs: 90, sugar: null, protein: 5, confidence: "low" }
   },
   {
     id: "strawberry-ice-cream-bar",
@@ -387,7 +422,8 @@ const COOKIES = [
     desc: "A chilled cookie packed with strawberry and vanilla, layered with whipped white drop buttercream, and topped with a strawberry and vanilla streusel crunch.",
     img: "https://crumbl.video/1d467b99-bb37-4996-bca9-a743c7b07aec_StrawberryIceCreamBar_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 6
+    rank: 6,
+    nutrition: { calories: 960, fat: 48, carbs: 124, sugar: null, protein: 12, confidence: "low" }
   },
   {
     id: "pink-sugar-cookie",
@@ -395,7 +431,8 @@ const COOKIES = [
     desc: "A classic almond sugar cookie topped with a silky pink swoop of real almond frosting.",
     img: "https://crumbl.video/568d7e50-71f9-4223-826a-72672312ddbb_ClassicPinkSugar_FlyingAerial_TECH.png",
     category: "classic",
-    rank: 7
+    rank: 7,
+    nutrition: { calories: 680, fat: 34, carbs: 92, sugar: 58, protein: 5, confidence: "low" }
   },
   {
     id: "brownie-batter-cookie",
@@ -403,7 +440,8 @@ const COOKIES = [
     desc: "A gooey chocolate cookie packed with semi-sweet chocolate chips and topped with delectable brownie batter.",
     img: "https://crumbl.video/4ead7000-644b-4bd4-938a-622ec3194846_BrownieBatter_FlyingAerial_TECH.png",
     category: "classic",
-    rank: 8
+    rank: 8,
+    nutrition: { calories: 720, fat: 32, carbs: 96, sugar: null, protein: 8, confidence: "low" }
   },
   {
     id: "banana-pudding",
@@ -411,7 +449,8 @@ const COOKIES = [
     desc: "Creamy banana-packed layers of velvety vanilla pudding and vanilla wafers topped off with fresh whipped cream and wafer crumbs.",
     img: "https://crumbl.video/defb8841-61bd-4558-8ffa-aa9093d7db31_BananaPudding_CutAerial_TECH.png",
     category: "top25",
-    rank: 9
+    rank: 9,
+    nutrition: { calories: 640, fat: 44, carbs: 68, sugar: null, protein: null, confidence: "low" }
   },
   {
     id: "kentucky-butter-cake",
@@ -419,7 +458,8 @@ const COOKIES = [
     desc: "A warm yellow butter cake cookie smothered with a melt-in-your-mouth buttery glaze and topped with a sprinkle of powdered sugar.",
     img: "https://crumbl.video/0d63aa66-55e2-4833-8ef3-ef3941f3f2a9_KentuckyButterCake_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 10
+    rank: 10,
+    nutrition: { calories: 640, fat: 25, carbs: 90, sugar: 40, protein: 10, confidence: "medium" }
   },
   {
     id: "biscoff-tres-leches",
@@ -427,7 +467,8 @@ const COOKIES = [
     desc: "A lightly spiced cake soaked in a classic tres leches sauce, topped with Lotus Biscoff® cookie butter, fresh whipped cream, Lotus Biscoff® cookie pieces, and a drizzle of melted cookie butter.",
     img: null,
     category: "top25",
-    rank: 11
+    rank: 11,
+    nutrition: { calories: 1080, fat: 64, carbs: null, sugar: 88, protein: null, confidence: "low" }
   },
   {
     id: "peanut-butter-cup-reeses",
@@ -435,7 +476,8 @@ const COOKIES = [
     desc: "A classic peanut butter cookie topped with a pool of melted peanut butter chips, drizzled with gooey milk chocolate, and sprinkled with REESE'S Peanut Butter Cups.",
     img: null,
     category: "top25",
-    rank: 12
+    rank: 12,
+    nutrition: { calories: 434, fat: 24, carbs: 47, sugar: 29, protein: 10, confidence: "low" }
   },
   {
     id: "churro-cookie",
@@ -443,7 +485,8 @@ const COOKIES = [
     desc: "A warm cinnamon cookie topped with a swirl of smooth cinnamon buttercream and a dusting of cinnamon sugar.",
     img: "https://crumbl.video/52a14b1a-89de-490d-8f18-137d69d7fc61_ChurroCookie_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 13
+    rank: 13,
+    nutrition: { calories: 290, fat: 12, carbs: 43, sugar: 24, protein: 3, confidence: "low" }
   },
   {
     id: "chocolate-hazelnut-cheesecake",
@@ -451,7 +494,8 @@ const COOKIES = [
     desc: "A decadent chocolate and hazelnut cheesecake nestled on a cookies & cream crust, then crowned with smooth NUTELLA® and fluffy whipped cream.",
     img: "https://crumbl.video/71d04456-3118-4a05-859b-f465c0726c1a_HazelnutCheesecakeDessert_FlyingAerial_TECH.png",
     category: "top25",
-    rank: 14
+    rank: 14,
+    nutrition: { calories: 980, fat: 61, carbs: 83, sugar: null, protein: 13, confidence: "medium" }
   },
   {
     id: "pink-velvet-cake-cookie",
@@ -459,7 +503,8 @@ const COOKIES = [
     desc: "A velvety cake batter cookie topped with smooth vanilla cream cheese frosting and a delicate sprinkle of pink velvet cookie crumbs.",
     img: "https://crumbl.video/94efc6a8-346c-4aa5-a69f-ead7c369bd72__PinkVelvetCake_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 15
+    rank: 15,
+    nutrition: { calories: 730, fat: 28, carbs: 101, sugar: 52, protein: 6, confidence: "medium" }
   },
   {
     id: "cookie-dough-cookie",
@@ -467,7 +512,8 @@ const COOKIES = [
     desc: "A brown sugar cookie topped with creamy cookie dough buttercream and finished with chunks of cookie dough.",
     img: "https://crumbl.video/307d8893-0148-4853-b502-635e5e8b30fc_CookieDough_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 16
+    rank: 16,
+    nutrition: null
   },
   {
     id: "molten-lava-cookie",
@@ -475,7 +521,8 @@ const COOKIES = [
     desc: "A scrumptious dark chocolate cookie oozing with hot fudge and sprinkled with powdered sugar.",
     img: "https://crumbl.video/8717000c-4cb9-4695-adf1-55ecf85ce7f7_MoltenLavaCookie_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 17
+    rank: 17,
+    nutrition: { calories: 820, fat: 32, carbs: 100, sugar: 48, protein: 8, confidence: "low" }
   },
   {
     id: "french-toast-cookie",
@@ -483,7 +530,8 @@ const COOKIES = [
     desc: "A fluffy, buttery cookie topped with cinnamon egg wash, a dollop of buttercream, a sweet syrup drizzle, and a sprinkle of powdered sugar.",
     img: "https://crumbl.video/33a8d652-2b23-4e10-84f3-3b50a231e9e5_FrenchToastCookie_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 18
+    rank: 18,
+    nutrition: { calories: 810, fat: 35, carbs: 112, sugar: null, protein: 4, confidence: "low" }
   },
   {
     id: "red-velvet-cupcake-cookie",
@@ -491,7 +539,8 @@ const COOKIES = [
     desc: "A red velvet cookie topped with a swirl of delicious vanilla cream cheese frosting and a sprinkle of crumbly red velvet cookie crumbs.",
     img: "https://crumbl.video/e0403610-1b07-4df9-87a5-975547a505a2_RedVelvetCupcake_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 19
+    rank: 19,
+    nutrition: { calories: 880, fat: 41, carbs: 122, sugar: null, protein: 7, confidence: "medium" }
   },
   {
     id: "salted-caramel-cheesecake",
@@ -499,7 +548,8 @@ const COOKIES = [
     desc: "A caramel cheesecake baked over a buttery graham cracker crust, then topped with a drizzle of caramel, a sprinkle of sea salt, and a dollop of whipped cream.",
     img: "https://crumbl.video/71b559c7-f68c-4a12-9239-093a62a63cfc_SaltedCaramelCheesecakeDessert_FlyingAerial_TECH.png",
     category: "top25",
-    rank: 20
+    rank: 20,
+    nutrition: null
   },
   {
     id: "waffle-cookie",
@@ -507,7 +557,8 @@ const COOKIES = [
     desc: "A waffle cookie topped with a dollop of buttercream frosting and served with a side of syrup.",
     img: "https://crumbl.video/655d6603-7abc-45f7-909a-849e05c2c6c9_Waffle_OverheadAerial_NoShadow_Tech.png",
     category: "top25",
-    rank: 21
+    rank: 21,
+    nutrition: { calories: 920, fat: 36, carbs: 144, sugar: 76, protein: 8, confidence: "low" }
   },
   {
     id: "snickerdoodle-cookie",
@@ -515,7 +566,8 @@ const COOKIES = [
     desc: "A classic vanilla sugar cookie rolled in a sparkly cinnamon sugar coating.",
     img: "https://crumbl.video/59e8277d-8802-4371-a35a-25e31e3fc747_Snickerdoodle_OverheadAerial_NoShadow_TECH.png",
     category: "top25",
-    rank: 22
+    rank: 22,
+    nutrition: { calories: 630, fat: 24, carbs: 87, sugar: 39, protein: 5, confidence: "low" }
   },
   {
     id: "key-lime-pie-cookie",
@@ -523,7 +575,8 @@ const COOKIES = [
     desc: "A refreshing chilled graham cookie layered with zesty lime filling, then topped with whipped cream, graham cracker crumbs, and a fresh lime wedge.",
     img: "https://crumbl.video/1e6ad007-a75d-4ad4-837e-3fbd4dd7be21_KeyLimePie_OverheadAerial_NoShadow.png",
     category: "top25",
-    rank: 23
+    rank: 23,
+    nutrition: { calories: 670, fat: 43, carbs: 73, sugar: null, protein: 6, confidence: "medium" }
   },
   {
     id: "brookie-cookie",
@@ -531,7 +584,8 @@ const COOKIES = [
     desc: "A semi-sweet chocolate chip cookie and a rich chocolate cookie perfectly baked together.",
     img: "https://crumbl.video/9cfa4aa7-4512-44a7-ba07-63807cc1c45b_Brookie_OverheadAerial_TECH.png",
     category: "top25",
-    rank: 24
+    rank: 24,
+    nutrition: { calories: 600, fat: 30, carbs: 80, sugar: null, protein: 6, confidence: "medium" }
   },
   {
     id: "celebration-cake-cookie",
@@ -539,7 +593,8 @@ const COOKIES = [
     desc: "A fluffy cake batter cookie with cake batter cream cheese frosting and a splash of rainbow sprinkles.",
     img: null,
     category: "top25",
-    rank: 25
+    rank: 25,
+    nutrition: { calories: 810, fat: null, carbs: null, sugar: null, protein: null, confidence: "low" }
   },
   // ── Classics (always available) ──
   {
@@ -547,7 +602,8 @@ const COOKIES = [
     name: "Chocolate Chip Cookie",
     desc: "A classic warm brown sugar cookie loaded with melty milk chocolate chips and rich semi-sweet chocolate chunks.",
     img: "https://crumbl.video/b79a9d21-35de-44d4-9916-7ec91d54cdb6_ChocolateChipCookie_OverheadAerial_NoShadow_TECH.png",
-    category: "classic"
+    category: "classic",
+    nutrition: { calories: 550, fat: 30, carbs: 72, sugar: null, protein: 4, confidence: "medium" }
   },
   // ── This Week's Rotating Menu (Jun 21–27) ──
   {
@@ -555,56 +611,64 @@ const COOKIES = [
     name: "Caramel Apple Cookie",
     desc: "A warm cinnamon apple cookie topped with caramel cream cheese frosting, chopped Granny Smith apples, a drizzle of caramel, and a house-made streusel.",
     img: "https://crumbl.video/7b5f2317-63b8-4f4a-bc93-7c7657b1b247_CaramelApple_OverheadAerial_NoSHadow_TECH.png",
-    category: "weekly"
+    category: "weekly",
+    nutrition: { calories: 680, fat: 32, carbs: 92, sugar: null, protein: 4, confidence: "medium" }
   },
   {
     id: "cotton-candy-cookie",
     name: "Cotton Candy Cookie",
     desc: "A fluffy vanilla cookie covered in cotton candy cream cheese frosting, with a sprinkle of popping candy.",
     img: "https://crumbl.video/36c7c6c5-2f22-4fe7-84a5-eac7175f753b_CottonCandyCookie_FlyingAerial_TECH.png",
-    category: "weekly"
+    category: "weekly",
+    nutrition: { calories: 680, fat: 44, carbs: 72, sugar: 40, protein: 4, confidence: "medium" }
   },
   {
     id: "strawberry-lemonade-cookie",
     name: "Strawberry Lemonade Cookie",
     desc: "A lemon sugar cookie topped with a swirl of lemon and strawberry buttercream and finished with slices of fresh lemon and fresh strawberry.",
     img: "https://crumbl.video/f6e7abf9-fc2a-4465-9fb1-5af76b878e9b_StrawberryLemonadeCookie_OverheadAerial_NoShadow_TECH.png",
-    category: "weekly"
+    category: "weekly",
+    nutrition: null
   },
   {
     id: "fried-cookies-cream-cookie",
     name: "Fried Cookies & Cream Cookie",
     desc: "A buttery cookie stuffed with a whole cookies & cream cookie, rolled in a golden streusel, topped with a sweet butter glaze and extra streusel, then finished with a drizzle of cookies & cream glaze.",
     img: "https://crumbl.video/7c0d0834-3a4b-48f5-b08e-167081c5ed20_FriedCookiesCreamCookie_OverheadAerial_TECH.png",
-    category: "weekly"
+    category: "weekly",
+    nutrition: { calories: 620, fat: 31, carbs: 82, sugar: null, protein: 5, confidence: "low" }
   },
   {
     id: "funnel-cake-cookie",
     name: "Funnel Cake Cookie",
     desc: "A buttery cookie baked with sweetened condensed milk and cookie crumbs, topped with a buttery glaze, then finished with a generous dusting of powdered sugar.",
     img: "https://crumbl.video/71e7a38b-5ef7-4d3f-b2c8-ff36f2364a4b_FunnelCakeCookie_OverheadAerial_NoShadow_TECH.png",
-    category: "weekly"
+    category: "weekly",
+    nutrition: { calories: null, fat: 35, carbs: 86, sugar: 52, protein: 6, confidence: "low" }
   },
   {
     id: "cake-batter-cookie-thins",
     name: "Cake Batter Cookie Thins (Set of 2)",
     desc: "Two thin cake batter cookies complete with rainbow sprinkles, crisp edges, and chewy centers.",
     img: "https://crumbl.video/4a0da65d-edae-4e3b-8fee-eda8e17a782b_CakeBatterCookieThins_FlyingAerial_TECH_1.png",
-    category: "weekly"
+    category: "weekly",
+    nutrition: { calories: 390, fat: null, carbs: null, sugar: null, protein: null, confidence: "low" }
   },
   {
     id: "dubai-chocolate-strawberry-cup",
     name: "Dubai-Style Chocolate Strawberry Cup",
     desc: "Layers of smooth milk chocolate, pistachio cream, crunchy toasted Kataifi pieces, and fresh strawberries.",
     img: "https://crumbl.video/1e8b3704-9076-4025-b356-5299f807e2a9_Dubai-StyleStrawberryCup_Aerial_TECH.png",
-    category: "weekly"
+    category: "weekly",
+    nutrition: null
   },
   {
     id: "chocolate-strawberry-cup-gf",
     name: "Chocolate Strawberry Cup (Gluten-Friendly)",
     desc: "A gluten-friendly treat layered with chocolate and fresh strawberries — all the indulgence, none of the gluten.",
     img: "https://crumbl.video/4470bf6b-3b2a-4ccf-9f24-9b95c2e2f3bc_ChocolateStrawberryCup_GlutenFriendly_Aerial_TECH.png",
-    category: "weekly"
+    category: "weekly",
+    nutrition: null
   }
 ];
 
@@ -677,6 +741,19 @@ function updateStats() {
   document.getElementById('stat-total').textContent = COOKIES.length;
 }
 
+function renderNutrition(n) {
+  if (!n) return `<div class="card-nutrition-none">🔍 Nutrition info not available</div>`;
+  const approx = n.confidence === 'low' ? 'approx' : '';
+  const parts = [];
+  if (n.calories != null) parts.push(`${n.calories} cal`);
+  if (n.fat != null) parts.push(`${n.fat}g fat`);
+  if (n.carbs != null) parts.push(`${n.carbs}g carbs`);
+  if (n.sugar != null) parts.push(`${n.sugar}g sugar`);
+  if (n.protein != null) parts.push(`${n.protein}g protein`);
+  if (parts.length === 0) return `<div class="card-nutrition-none">🔍 Nutrition info not available</div>`;
+  return `<div class="card-nutrition ${approx}"><span class="${approx}">${parts.join(' · ')}</span></div>`;
+}
+
 function render() {
   const q = document.getElementById('search').value.toLowerCase();
   const grid = document.getElementById('grid');
@@ -717,6 +794,8 @@ function render() {
       `<span class="star ${i <= entry.rating ? 'filled' : ''}" onclick="setRating('${cookie.id}', ${i})">★</span>`
     ).join('');
 
+    const nutritionHtml = renderNutrition(cookie.nutrition);
+
     return `
       <div class="card" id="card-${cookie.id}">
         ${imgHtml}
@@ -724,6 +803,7 @@ function render() {
           ${badgeHtml}
           <div class="card-name">${cookie.name}</div>
           <div class="card-desc">${cookie.desc}</div>
+          ${nutritionHtml}
 
           <div class="card-actions">
             <button class="btn-status ${isWishlist ? 'active-wishlist' : ''}"
